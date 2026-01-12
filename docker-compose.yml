@@ -4,8 +4,8 @@ services:
     restart: always
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: 
-      POSTGRES_DB: identity-api
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: identity_api
     ports:
       - "5433:5432"
     volumes:
