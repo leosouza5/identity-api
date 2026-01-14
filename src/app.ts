@@ -1,15 +1,12 @@
 import express from 'express';
-import { errorHandlingMiddleware } from '@/middlewares/errorHandlingMiddleware';
-import { AppError } from './utils/AppError';
+import { errorHandlingMiddleware } from './middlewares/errorHandlingMiddleware.js';
+import { userRoutes } from './routes/userRoutes.js';
 
 const app = express();
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-
-  return res.send("Hello World");
-});
+app.use('/users', userRoutes);
 
 app.use(errorHandlingMiddleware)
 

@@ -14,12 +14,14 @@
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
     "@types/express": "^5.0.6",
+    "argon2": "^0.44.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "pg": "^8.16.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "uuid": "^13.0.0"
+    "uuid": "^13.0.0",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@types/node": "^25.0.6",
