@@ -5,8 +5,11 @@
       "ES2023"
     ],
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": [
+        "./src/*"
+      ],
     },
+ 
     "module": "node16",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

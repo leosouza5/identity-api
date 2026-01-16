@@ -1,7 +1,7 @@
 import { User, type UserStatus } from '@/entities/User.js';
 
 import type { IUserRepository } from '../IUserRepository.js';
-import { prisma } from './prismaClient.js'
+import { prisma } from '@/config/prismaClient.js';
 
 export class PostgresUserRepository implements IUserRepository {
   async save(user: User): Promise<void> {
