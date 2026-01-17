@@ -2,10 +2,10 @@ import type { IUserRepository } from "@/repositories/IUserRepository.js"
 import type { ICreateUserRequestDTO } from "./ICreateUserDTO.js"
 import { AppError } from "@/utils/AppError.js"
 import { User } from "@/entities/User.js"
-import type { IPasswordHasher } from "@/providers/IPasswordHasher.js"
+import type { IPasswordHasherProvider } from "@/providers/IPasswordHasherProvider.js"
 
 export class CreateUserUseCase {
-  constructor(private userRepository: IUserRepository, private passwordHasher: IPasswordHasher) {
+  constructor(private userRepository: IUserRepository, private passwordHasher: IPasswordHasherProvider) {
   }
 
   async execute(data: ICreateUserRequestDTO) {

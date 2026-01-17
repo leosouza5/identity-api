@@ -11,6 +11,6 @@ export type JwtVerifyResult = {
 }
 
 export interface IJwtProvider {
-  generateToken(input: JwtSignInput): Promise<String>
+  generateToken(input: JwtSignInput): Promise<string>
   verify(token: string): Promise<JwtVerifyResult>
 }

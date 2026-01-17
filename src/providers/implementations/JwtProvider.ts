@@ -4,7 +4,7 @@ import type { IJwtProvider, JwtSignInput, JwtVerifyResult } from "../IJwtProvide
 import { authConfig } from "@/config/auth.js";
 
 export class JwtProvider implements IJwtProvider {
-  async generateToken(input: JwtSignInput): Promise<String> {
+  async generateToken(input: JwtSignInput): Promise<string> {
     const token = jwt.sign(input.payload ?? {}, authConfig.jwt.secret, { expiresIn: authConfig.jwt.expiresIn, subject: input.subject })
 
     return token
