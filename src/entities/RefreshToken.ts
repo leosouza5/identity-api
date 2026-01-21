@@ -15,13 +15,13 @@ export class RefreshToken {
     tokenHash: string
     expiresAt: Date
     revokedAt?: Date | null
-    createdAt: Date
+    createdAt?: Date
   }) {
     this.id = props.id ?? uuid()
     this.userId = props.userId
     this.tokenHash = props.tokenHash
     this.expiresAt = props.expiresAt
     this.revokedAt = props.revokedAt
-    this.createdAt = props.createdAt
+    this.createdAt = props.createdAt ?? new Date()
   }
 }
