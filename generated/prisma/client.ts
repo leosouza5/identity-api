@@ -60,6 +60,11 @@ export type Permission = Prisma.PermissionModel
  */
 export type RolePermission = Prisma.RolePermissionModel
 /**
+ * Model UserRoles
+ * 
+ */
+export type UserRoles = Prisma.UserRolesModel
+/**
  * Model RefreshToken
  * 
  */

@@ -388,6 +388,7 @@ export const ModelName = {
   Role: 'Role',
   Permission: 'Permission',
   RolePermission: 'RolePermission',
+  UserRoles: 'UserRoles',
   RefreshToken: 'RefreshToken',
   AuditLog: 'AuditLog'
 } as const
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "role" | "permission" | "rolePermission" | "refreshToken" | "auditLog"
+    modelProps: "user" | "role" | "permission" | "rolePermission" | "userRoles" | "refreshToken" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -705,6 +706,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UserRoles: {
+      payload: Prisma.$UserRolesPayload<ExtArgs>
+      fields: Prisma.UserRolesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserRolesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRolesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserRolesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRolesPayload>
+        }
+        findFirst: {
+          args: Prisma.UserRolesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRolesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserRolesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRolesPayload>
+        }
+        findMany: {
+          args: Prisma.UserRolesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRolesPayload>[]
+        }
+        create: {
+          args: Prisma.UserRolesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRolesPayload>
+        }
+        createMany: {
+          args: Prisma.UserRolesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserRolesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRolesPayload>[]
+        }
+        delete: {
+          args: Prisma.UserRolesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRolesPayload>
+        }
+        update: {
+          args: Prisma.UserRolesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRolesPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserRolesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserRolesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserRolesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRolesPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserRolesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRolesPayload>
+        }
+        aggregate: {
+          args: Prisma.UserRolesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserRoles>
+        }
+        groupBy: {
+          args: Prisma.UserRolesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserRolesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserRolesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserRolesCountAggregateOutputType> | number
+        }
+      }
+    }
     RefreshToken: {
       payload: Prisma.$RefreshTokenPayload<ExtArgs>
       fields: Prisma.RefreshTokenFieldRefs
@@ -937,6 +1012,16 @@ export const RolePermissionScalarFieldEnum = {
 export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnum)[keyof typeof RolePermissionScalarFieldEnum]
 
 
+export const UserRolesScalarFieldEnum = {
+  userId: 'userId',
+  roleId: 'roleId',
+  assignedAt: 'assignedAt',
+  assignedByUserId: 'assignedByUserId'
+} as const
+
+export type UserRolesScalarFieldEnum = (typeof UserRolesScalarFieldEnum)[keyof typeof UserRolesScalarFieldEnum]
+
+
 export const RefreshTokenScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1164,6 +1249,7 @@ export type GlobalOmitConfig = {
   role?: Prisma.RoleOmit
   permission?: Prisma.PermissionOmit
   rolePermission?: Prisma.RolePermissionOmit
+  userRoles?: Prisma.UserRolesOmit
   refreshToken?: Prisma.RefreshTokenOmit
   auditLog?: Prisma.AuditLogOmit
 }
