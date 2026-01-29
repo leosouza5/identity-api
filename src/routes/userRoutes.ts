@@ -9,12 +9,14 @@ import { JwtProvider } from "@/providers/implementations/JwtProvider.js";
 import { makeEnsureAuthorized } from "@/middlewares/ensureAuthorizedMiddleware.js";
 import { PostgresAuthorizationRepository } from "@/repositories/implementations/PostgresAuthorizationRepository.js";
 import { EnsureAuthorizedUseCase } from "@/useCases/Authorization/EnsureAuthorized/EnsureAuthorizedUseCase.js";
+import { PostgresAuditLogRepository } from "@/repositories/implementations/PostgresAuditLogRepository.js";
 
 
 const userRoutes = Router();
 
 const postgresAuthorizationRepository = new PostgresAuthorizationRepository();
 const postgresUserRepository = new PostgresUserRepository();
+const auditLogRepository = new PostgresAuditLogRepository();
 const passwordHasher = new PasswordHasherProvider();
 const jwtProvider = new JwtProvider()
 
@@ -22,7 +24,7 @@ const ensureAuthorizedUseCase = new EnsureAuthorizedUseCase(
   postgresUserRepository,
   postgresAuthorizationRepository
 );
-const createUserUseCase = new CreateUserUseCase(postgresUserRepository, passwordHasher);
+const createUserUseCase = new CreateUserUseCase(postgresUserRepository, passwordHasher, auditLogRepository);
 const createUserController = new CreateUserController(createUserUseCase);
 
 const ensureAuthenticatedMiddleware = makeEnsureAuthenticated(jwtProvider)
@@ -32,9 +34,9 @@ const requirePermission = (...permissions: string[]) =>
 
 
 userRoutes.post("/",
-   ensureAuthenticatedMiddleware, 
-   requirePermission("user:create"), 
-   (req, res, next) => createUserController.handle(req, res, next)
+  ensureAuthenticatedMiddleware,
+  requirePermission("user:create"),
+  (req, res, next) => createUserController.handle(req, res, next)
 )
 
 

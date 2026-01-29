@@ -3,3 +3,9 @@ declare namespace Express {
     userId?: string
   }
 }
+
+type AuditCtx = {
+  actorUserId: string | null
+  ipAddress: string | null
+  userAgent: string | null
+}

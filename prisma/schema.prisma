@@ -94,7 +94,7 @@ model AuditLog {
   actorUserId  String?
   action       String
   resourceType String
-  resourceId   String
+  resourceId   String?
   metadata     Json
   ipAddress    String?
   userAgent    String?

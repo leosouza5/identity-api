@@ -3,12 +3,13 @@ import type { ICreateUserRequestDTO } from "./ICreateUserDTO.js"
 import { AppError } from "@/utils/AppError.js"
 import { User } from "@/entities/User.js"
 import type { IPasswordHasherProvider } from "@/providers/IPasswordHasherProvider.js"
+import type { IAuditLogRepository } from "@/repositories/IAuditLogRepository.js"
 
 export class CreateUserUseCase {
-  constructor(private userRepository: IUserRepository, private passwordHasher: IPasswordHasherProvider) {
+  constructor(private userRepository: IUserRepository, private passwordHasher: IPasswordHasherProvider, private auditLogRepository: IAuditLogRepository) {
   }
 
-  async execute(data: ICreateUserRequestDTO) {
+  async execute(data: ICreateUserRequestDTO, auditData: AuditCtx) {
     const userAlreadyExists = await this.userRepository.findByEmail(data.email)
 
     if (userAlreadyExists) {
@@ -25,6 +26,20 @@ export class CreateUserUseCase {
 
 
     await this.userRepository.save(user)
+    try {
+      await this.auditLogRepository.create({
+        action: 'user:create',
+        resourceId: user.id,
+        resourceType: 'User',
+        actorUserId: auditData.actorUserId,
+        ipAddress: auditData.ipAddress,
+        userAgent: auditData.userAgent,
+        metadata: {
+          name: data.name,
+          email: data.email,
+        }
+      })
+    } catch { }
 
     return {
       id: user.id,

@@ -1,25 +1,27 @@
 import { Request, Response, NextFunction } from "express";
 import type { CreateRoleUseCase } from "./CreateRoleUseCase.js";
-import { getRolePermissionsSchema } from "@/schemas/getRolePermissionsSchema.js";
-import { updateRoleParamsSchema, updateRoleSchema } from "@/schemas/updateRoleSchema.js";
 import { createRoleSchema } from "@/schemas/createRoleSchema.js";
+import type { IAuditLogRepository } from "@/repositories/IAuditLogRepository.js";
+import { buildAuditCtx } from "@/utils/Audit.js";
 
 
 export class CreateRoleController {
-  constructor(private createRoleUseCase: CreateRoleUseCase) {
+  constructor(private createRoleUseCase: CreateRoleUseCase, private auditLogRepository: IAuditLogRepository) {
   }
 
-  async handle(req: Request, res: Response, next: NextFunction) {
+  async handle(req: Request, res: Response, next: NextFunction, auditData: AuditCtx) {
     try {
 
+      const auditData = buildAuditCtx(req)
 
       const safeValues = createRoleSchema.parse(req.body)
-      const data = await this.createRoleUseCase.execute(safeValues);
+      const data = await this.createRoleUseCase.execute(safeValues,auditData);
 
-      return res.status(200).json(data);
+      
+        return res.status(200).json(data);
 
-    } catch (error) {
-      next(error)
+      } catch (error) {
+        next(error)
+      }
     }
-  }
 }
