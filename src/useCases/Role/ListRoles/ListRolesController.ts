@@ -1,9 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import type {  ListRolesUseCase } from "./ListRolesUseCase.js";
+import { makeListRolesUseCase } from "./ListRolesFactory.js";
 
 
 export class ListRolesController {
-  constructor(private listRolesUseCase: ListRolesUseCase) {
+  private listRolesUseCase: ListRolesUseCase;
+
+  constructor() {
+    this.listRolesUseCase = makeListRolesUseCase();
   }
 
   async handle(req: Request, res: Response, next: NextFunction) {
@@ -13,7 +17,7 @@ export class ListRolesController {
       return res.status(200).json(data);
 
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }

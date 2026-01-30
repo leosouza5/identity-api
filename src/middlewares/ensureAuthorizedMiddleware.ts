@@ -1,6 +1,7 @@
-import { EnsureAuthorizedUseCase } from "@/useCases/Authorization/EnsureAuthorized/EnsureAuthorizedUseCase.js";
+import type { EnsureAuthorizedUseCase } from "@/useCases/Authorization/EnsureAuthorized/EnsureAuthorizedUseCase.js";
 import { AppError } from "@/utils/AppError.js";
 import type { NextFunction, Request, Response } from "express"
+import { makeEnsureAuthorizedUseCase } from "@/useCases/Authorization/EnsureAuthorized/EnsureAuthorizedFactory.js";
 
 export function makeEnsureAuthorized(
   permissions: string[],
@@ -17,4 +18,9 @@ export function makeEnsureAuthorized(
       return next(error);
     }
   };
+}
+
+export function makeEnsureAuthorizedMiddleware(permissions: string[]) {
+  const ensureAuthorizedUseCase = makeEnsureAuthorizedUseCase();
+  return makeEnsureAuthorized(permissions, ensureAuthorizedUseCase);
 }

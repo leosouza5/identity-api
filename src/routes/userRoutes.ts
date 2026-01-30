@@ -1,42 +1,34 @@
-import { Request, Response, NextFunction } from "express";
-import { PasswordHasherProvider } from "@/providers/implementations/PasswordHasherProvider.js";
-import { PostgresUserRepository } from "@/repositories/implementations/PostgresUserRepository.js";
 import { CreateUserController } from "@/useCases/User/CreateUser/CreateUserController.js";
-import { CreateUserUseCase } from "@/useCases/User/CreateUser/CreateUserUseCase.js";
 import { Router } from "express";
 import { makeEnsureAuthenticated } from "@/middlewares/ensureAuthenticatedMiddleware.js";
 import { JwtProvider } from "@/providers/implementations/JwtProvider.js";
-import { makeEnsureAuthorized } from "@/middlewares/ensureAuthorizedMiddleware.js";
-import { PostgresAuthorizationRepository } from "@/repositories/implementations/PostgresAuthorizationRepository.js";
-import { EnsureAuthorizedUseCase } from "@/useCases/Authorization/EnsureAuthorized/EnsureAuthorizedUseCase.js";
-import { PostgresAuditLogRepository } from "@/repositories/implementations/PostgresAuditLogRepository.js";
-
-
+import { makeEnsureAuthorizedMiddleware } from "@/middlewares/ensureAuthorizedMiddleware.js";
+import { SyncUserRolesController } from "@/useCases/User/SyncUserRoles/SyncUserRolesController.js";
 const userRoutes = Router();
 
-const postgresAuthorizationRepository = new PostgresAuthorizationRepository();
-const postgresUserRepository = new PostgresUserRepository();
-const auditLogRepository = new PostgresAuditLogRepository();
-const passwordHasher = new PasswordHasherProvider();
-const jwtProvider = new JwtProvider()
+const jwtProvider = new JwtProvider();
 
-const ensureAuthorizedUseCase = new EnsureAuthorizedUseCase(
-  postgresUserRepository,
-  postgresAuthorizationRepository
-);
-const createUserUseCase = new CreateUserUseCase(postgresUserRepository, passwordHasher, auditLogRepository);
-const createUserController = new CreateUserController(createUserUseCase);
+const createUserController = new CreateUserController();
+const syncUserRolesController = new SyncUserRolesController();
 
-const ensureAuthenticatedMiddleware = makeEnsureAuthenticated(jwtProvider)
+const ensureAuthenticatedMiddleware = makeEnsureAuthenticated(jwtProvider);
+const requirePermission = (permission: string) =>
+  makeEnsureAuthorizedMiddleware([permission]);
 
-const requirePermission = (...permissions: string[]) =>
-  makeEnsureAuthorized(permissions, ensureAuthorizedUseCase);
+
 
 
 userRoutes.post("/",
   ensureAuthenticatedMiddleware,
   requirePermission("user:create"),
   (req, res, next) => createUserController.handle(req, res, next)
+)
+
+
+userRoutes.post("/:user_id/sync-roles",
+  ensureAuthenticatedMiddleware,
+  requirePermission("role:assign"),
+  (req, res, next) => syncUserRolesController.handle(req, res, next)
 )
 
 

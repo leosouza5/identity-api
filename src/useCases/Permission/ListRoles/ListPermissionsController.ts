@@ -1,9 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import type { ListPermissionsUseCase } from "./ListPermissionsUseCase.js";
+import { makeListPermissionsUseCase } from "./ListPermissionsFactory.js";
 
 
 export class ListPermissionsController {
-  constructor(private listPermissionsUseCase: ListPermissionsUseCase) {
+  private listPermissionsUseCase: ListPermissionsUseCase;
+
+  constructor() {
+    this.listPermissionsUseCase = makeListPermissionsUseCase();
   }
 
   async handle(req: Request, res: Response, next: NextFunction) {
@@ -13,7 +17,7 @@ export class ListPermissionsController {
       return res.status(200).json(data);
 
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }
