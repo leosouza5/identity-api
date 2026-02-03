@@ -12,8 +12,6 @@ export function makeEnsureAuthenticated(jwtProvider: IJwtProvider) {
   
     const [_, token] = authorization.split(' ')
     const { subject } = await jwtProvider.verify(token)
-
-
     req.userId = subject
 
     return next()

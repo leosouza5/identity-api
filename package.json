@@ -31,6 +31,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.0.6",
     "@types/pg": "^8.16.0",
+    "postman-to-openapi": "^1.7.3",
     "prisma": "^7.2.0",
     "vitest": "^4.0.18",
     "vitest-mock-extended": "^3.1.0"

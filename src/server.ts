@@ -1,5 +1,4 @@
-import { app } from "@/app";
-import { AppError } from "./utils/AppError";
+import { app } from "@/app.js";
 
 const PORT = 3000;
 

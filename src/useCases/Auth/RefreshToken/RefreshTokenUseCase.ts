@@ -25,7 +25,7 @@ export class RefreshTokenUseCase {
     }
 
     const newAccessToken = await this.jwtProvider.generateToken({ subject: refreshToken.userId })
-
+    await this.refreshTokenRepository.revokeById(refreshToken.id!)
     return newAccessToken
   }
 } 

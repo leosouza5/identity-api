@@ -1,4 +1,5 @@
 import { prisma } from "@/config/prismaClient.js"
+import argon2 from "argon2"
 
 async function seed() {
   await prisma.role.createMany({
@@ -65,12 +66,32 @@ async function seed() {
         description: "Allows creating new roles.",
       },
       {
+        key: "role:read",
+        description: "Allows viewing roles.",
+      },
+      {
+        key: "role:update",
+        description: "Allows updating roles.",
+      },
+      {
+        key: "role:delete",
+        description: "Allows deleting roles.",
+      },
+      {
+        key: "role:sync_permissions",
+        description: "Allows syncing role permissions.",
+      },
+      {
         key: "role:assign",
         description: "Allows assigning roles to users.",
       },
       {
         key: "permission:create",
         description: "Allows creating new permissions in the system.",
+      },
+      {
+        key: "permission:read",
+        description: "Allows viewing permissions.",
       },
       {
         key: "session:revoke",
@@ -90,7 +111,38 @@ async function seed() {
       },
     ],
   })
+  const passwordHash = await argon2.hash("password")
 
+  const user = await prisma.user.create({
+    data: {
+      email: "user@test.com",
+      name: "Test User",
+      passwordHash: passwordHash,
+    }
+  })
+
+  const superAdminRole = await prisma.role.findFirst({
+    where: { name: "SUPER_ADMIN" },
+  })
+
+  await prisma.userRoles.create({
+    data: {
+      userId: user.id,
+      roleId: superAdminRole!.id,
+    },
+  })
+  const permissions = await prisma.permission.findMany()
+
+  await Promise.all(
+    permissions.map((permission) =>
+      prisma.rolePermission.create({
+        data: {
+          roleId: superAdminRole!.id,
+          permissionId: permission.id,
+        },
+      })
+    )
+  )
 }
 
 seed().then(() => {
