@@ -10,7 +10,6 @@ export function makeEnsureAuthorized(
   return async function ensureAuthorized(req: Request, _res: Response, next: NextFunction) {
     try {
       const userId = req.userId;
-      console.log("User ID in ensureAuthorized middleware:", userId);
       
       if (!userId) return next(new AppError("Not Authorized", 403));
 

@@ -29,7 +29,7 @@ JWT_EXPIRES_IN="15m"
 3) (Opcional) Rode migrations/seed
 ```bash
 npx prisma migrate dev
-npx tsx prisma/seed.ts
+npx prisma db seed
 ```
 4) Inicie o servidor
 ```bash
