@@ -2,7 +2,7 @@ import { User, type UserStatus } from '@/entities/User.js';
 
 import type { IUserRepository } from '../IUserRepository.js';
 import { prisma } from '@/config/prismaClient.js';
-import type { UserRolesCreateManyInput } from '../../../generated/prisma/models.js';
+import type { UserRolesCreateManyInput } from '@/generated/models.js';
 
 export class PostgresUserRepository implements IUserRepository {
   async save(user: User): Promise<void> {

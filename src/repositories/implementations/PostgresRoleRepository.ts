@@ -2,7 +2,7 @@
 import { prisma } from '@/config/prismaClient.js';
 import { Role } from '@/entities/Role.js';
 import { Permission } from '@/entities/Permission.js';
-import type { RolePermissionCreateManyInput } from '../../../generated/prisma/models.js';
+import type { RolePermissionCreateManyInput } from '@/generated/models.js';
 import type { IRoleRepository, UpdateRoleData } from '../IRoleRepository.js';
 
 export class PostgresRoleRepository implements IRoleRepository {

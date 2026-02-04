@@ -33,6 +33,7 @@ async function seed() {
         description: "Limited access, typically for temporary or view-only usage.",
       },
     ],
+    skipDuplicates: true,
   })
 
   await prisma.permission.createMany({
@@ -110,39 +111,49 @@ async function seed() {
         description: "Allows retrying failed background jobs.",
       },
     ],
+    skipDuplicates: true,
   })
   const passwordHash = await argon2.hash("password")
 
-  const user = await prisma.user.create({
-    data: {
+  const user = await prisma.user.upsert({
+    where: { email: "user@test.com" },
+    update: {
+      name: "Test User",
+      passwordHash: passwordHash,
+    },
+    create: {
       email: "user@test.com",
       name: "Test User",
       passwordHash: passwordHash,
-    }
+    },
   })
 
   const superAdminRole = await prisma.role.findFirst({
     where: { name: "SUPER_ADMIN" },
   })
 
-  await prisma.userRoles.create({
-    data: {
+  await prisma.userRoles.upsert({
+    where: {
+      roleId_userId: {
+        roleId: superAdminRole!.id,
+        userId: user.id,
+      },
+    },
+    update: {},
+    create: {
       userId: user.id,
       roleId: superAdminRole!.id,
     },
   })
   const permissions = await prisma.permission.findMany()
 
-  await Promise.all(
-    permissions.map((permission) =>
-      prisma.rolePermission.create({
-        data: {
-          roleId: superAdminRole!.id,
-          permissionId: permission.id,
-        },
-      })
-    )
-  )
+  await prisma.rolePermission.createMany({
+    data: permissions.map((permission) => ({
+      roleId: superAdminRole!.id,
+      permissionId: permission.id,
+    })),
+    skipDuplicates: true,
+  })
 }
 
 seed().then(() => {

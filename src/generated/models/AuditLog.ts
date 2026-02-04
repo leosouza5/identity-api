@@ -172,7 +172,7 @@ export type AuditLogGroupByOutputType = {
   actorUserId: string | null
   action: string
   resourceType: string
-  resourceId: string
+  resourceId: string | null
   metadata: runtime.JsonValue
   ipAddress: string | null
   userAgent: string | null
@@ -205,7 +205,7 @@ export type AuditLogWhereInput = {
   actorUserId?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   action?: Prisma.StringFilter<"AuditLog"> | string
   resourceType?: Prisma.StringFilter<"AuditLog"> | string
-  resourceId?: Prisma.StringFilter<"AuditLog"> | string
+  resourceId?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   metadata?: Prisma.JsonFilter<"AuditLog">
   ipAddress?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   userAgent?: Prisma.StringNullableFilter<"AuditLog"> | string | null
@@ -218,7 +218,7 @@ export type AuditLogOrderByWithRelationInput = {
   actorUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   action?: Prisma.SortOrder
   resourceType?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrder
+  resourceId?: Prisma.SortOrderInput | Prisma.SortOrder
   metadata?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   userAgent?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -234,7 +234,7 @@ export type AuditLogWhereUniqueInput = Prisma.AtLeast<{
   actorUserId?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   action?: Prisma.StringFilter<"AuditLog"> | string
   resourceType?: Prisma.StringFilter<"AuditLog"> | string
-  resourceId?: Prisma.StringFilter<"AuditLog"> | string
+  resourceId?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   metadata?: Prisma.JsonFilter<"AuditLog">
   ipAddress?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   userAgent?: Prisma.StringNullableFilter<"AuditLog"> | string | null
@@ -247,7 +247,7 @@ export type AuditLogOrderByWithAggregationInput = {
   actorUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   action?: Prisma.SortOrder
   resourceType?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrder
+  resourceId?: Prisma.SortOrderInput | Prisma.SortOrder
   metadata?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   userAgent?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -265,7 +265,7 @@ export type AuditLogScalarWhereWithAggregatesInput = {
   actorUserId?: Prisma.StringNullableWithAggregatesFilter<"AuditLog"> | string | null
   action?: Prisma.StringWithAggregatesFilter<"AuditLog"> | string
   resourceType?: Prisma.StringWithAggregatesFilter<"AuditLog"> | string
-  resourceId?: Prisma.StringWithAggregatesFilter<"AuditLog"> | string
+  resourceId?: Prisma.StringNullableWithAggregatesFilter<"AuditLog"> | string | null
   metadata?: Prisma.JsonWithAggregatesFilter<"AuditLog">
   ipAddress?: Prisma.StringNullableWithAggregatesFilter<"AuditLog"> | string | null
   userAgent?: Prisma.StringNullableWithAggregatesFilter<"AuditLog"> | string | null
@@ -276,7 +276,7 @@ export type AuditLogCreateInput = {
   id?: string
   action: string
   resourceType: string
-  resourceId: string
+  resourceId?: string | null
   metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: string | null
   userAgent?: string | null
@@ -289,7 +289,7 @@ export type AuditLogUncheckedCreateInput = {
   actorUserId?: string | null
   action: string
   resourceType: string
-  resourceId: string
+  resourceId?: string | null
   metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: string | null
   userAgent?: string | null
@@ -300,7 +300,7 @@ export type AuditLogUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.StringFieldUpdateOperationsInput | string
   resourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  resourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -313,7 +313,7 @@ export type AuditLogUncheckedUpdateInput = {
   actorUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.StringFieldUpdateOperationsInput | string
   resourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  resourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -325,7 +325,7 @@ export type AuditLogCreateManyInput = {
   actorUserId?: string | null
   action: string
   resourceType: string
-  resourceId: string
+  resourceId?: string | null
   metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: string | null
   userAgent?: string | null
@@ -336,7 +336,7 @@ export type AuditLogUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.StringFieldUpdateOperationsInput | string
   resourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  resourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -348,7 +348,7 @@ export type AuditLogUncheckedUpdateManyInput = {
   actorUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   action?: Prisma.StringFieldUpdateOperationsInput | string
   resourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  resourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -445,7 +445,7 @@ export type AuditLogCreateWithoutUserInput = {
   id?: string
   action: string
   resourceType: string
-  resourceId: string
+  resourceId?: string | null
   metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: string | null
   userAgent?: string | null
@@ -456,7 +456,7 @@ export type AuditLogUncheckedCreateWithoutUserInput = {
   id?: string
   action: string
   resourceType: string
-  resourceId: string
+  resourceId?: string | null
   metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: string | null
   userAgent?: string | null
@@ -497,7 +497,7 @@ export type AuditLogScalarWhereInput = {
   actorUserId?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   action?: Prisma.StringFilter<"AuditLog"> | string
   resourceType?: Prisma.StringFilter<"AuditLog"> | string
-  resourceId?: Prisma.StringFilter<"AuditLog"> | string
+  resourceId?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   metadata?: Prisma.JsonFilter<"AuditLog">
   ipAddress?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   userAgent?: Prisma.StringNullableFilter<"AuditLog"> | string | null
@@ -508,7 +508,7 @@ export type AuditLogCreateManyUserInput = {
   id?: string
   action: string
   resourceType: string
-  resourceId: string
+  resourceId?: string | null
   metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: string | null
   userAgent?: string | null
@@ -519,7 +519,7 @@ export type AuditLogUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.StringFieldUpdateOperationsInput | string
   resourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  resourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -530,7 +530,7 @@ export type AuditLogUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.StringFieldUpdateOperationsInput | string
   resourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  resourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -541,7 +541,7 @@ export type AuditLogUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.StringFieldUpdateOperationsInput | string
   resourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  resourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -622,7 +622,7 @@ export type $AuditLogPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     actorUserId: string | null
     action: string
     resourceType: string
-    resourceId: string
+    resourceId: string | null
     metadata: runtime.JsonValue
     ipAddress: string | null
     userAgent: string | null

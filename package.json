@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch --env-file .env src/server.ts",
+    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "start": "node dist/src/server.js",
     "test": "vitest",
     "test:run": "vitest run"
   },
@@ -33,6 +35,7 @@
     "@types/pg": "^8.16.0",
     "postman-to-openapi": "^1.7.3",
     "prisma": "^7.2.0",
+    "tsc-alias": "^1.8.10",
     "vitest": "^4.0.18",
     "vitest-mock-extended": "^3.1.0"
   }
