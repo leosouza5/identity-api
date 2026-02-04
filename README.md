@@ -1,6 +1,6 @@
 # Identity API
 
-Projeto de estudo para praticar autenticacao, autorizacao por permissoes e organizacao de use cases. **Nao e um produto em producao**.
+Projeto de estudo para praticar autenticacao, autorizacao por permissoes e organizacao de use cases.
 
 ## Objetivo
 - Demonstrar fluxo de login + refresh token
